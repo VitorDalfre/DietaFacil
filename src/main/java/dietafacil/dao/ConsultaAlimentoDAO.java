@@ -1,11 +1,13 @@
 package dietafacil.dao;
 
 import dietafacil.ConexaoComBanco;
+import dietafacil.modelo.Alimento;
 import dietafacil.vo.AlimentoVO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class ConsultaAlimentoDAO {
 
@@ -56,6 +58,29 @@ public class ConsultaAlimentoDAO {
         return alimentoVO;
     }
 
-    //vamo pra outra call falar desse role?
+    public ArrayList<AlimentoVO> consultaTodosAlimentos() {
+        Statement stm;
+        ResultSet rst;
+        ArrayList<AlimentoVO> lista = new ArrayList<>();
+        StringBuilder sql = new StringBuilder();
 
+        sql.append("SELECT * FROM alimento");
+
+        try {
+            stm = ConexaoComBanco.getConexao().createStatement();
+            rst = stm.executeQuery(sql.toString());
+
+            while (rst.next()) {
+                AlimentoVO alimentoVO = new AlimentoVO(rst.getString("descricao"),
+                        rst.getDouble("carboidrato"),
+                        rst.getDouble("proteina"),
+                        rst.getDouble("gordura"),
+                        rst.getDouble("calorias"));
+                lista.add(alimentoVO);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
 }

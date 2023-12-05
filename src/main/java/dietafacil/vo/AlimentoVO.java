@@ -2,6 +2,8 @@ package dietafacil.vo;
 
 import dietafacil.modelo.Alimento;
 
+import java.util.ArrayList;
+
 public class AlimentoVO {
 
     private final String descricao;

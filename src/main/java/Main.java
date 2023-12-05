@@ -1,10 +1,10 @@
-import dietafacil.gui.CadastroAlimentoGUI;
+import dietafacil.gui.ConsultaAlimentoGUI;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        CadastroAlimentoGUI cadastroAlimentoGUI = new CadastroAlimentoGUI();
+//        ConsultaAlimentoGUI a = new ConsultaAlimentoGUI();
         
     }
 }
