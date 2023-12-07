@@ -38,8 +38,8 @@ public class Alimento {
         return calorias;
     }
 
-    public AlimentoVO toAlimentoVO(){
-        return new AlimentoVO(descricao, carboidrato, proteina, gordura,calorias);
+    public AlimentoVO toAlimentoVO() {
+        return new AlimentoVO(descricao, carboidrato, proteina, gordura, calorias);
     }
 
     @Override
@@ -51,4 +51,3 @@ public class Alimento {
                 + "Calorias: - " + calorias + "\n";
     }
 }
-

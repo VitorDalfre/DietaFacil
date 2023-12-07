@@ -1,10 +1,10 @@
-import dietafacil.gui.ConsultaAlimentoGUI;
+import dietafacil.gui.MenuGUI;
 
 public class Main {
 
     public static void main(String[] args) {
 
-//        ConsultaAlimentoGUI a = new ConsultaAlimentoGUI();
+        MenuGUI menu = new MenuGUI();
         
     }
 }

@@ -2,8 +2,7 @@ package dietafacil.gui;
 
 import dietafacil.modelo.Alimento;
 import dietafacil.service.AdicionaNovoAlimentoService;
-import dietafacil.shared.Message;
-import javax.swing.JOptionPane;
+import dietafacil.shared.MessageCadastro;
 
 public class CadastroAlimentoGUI extends javax.swing.JInternalFrame {
 
@@ -14,6 +13,8 @@ public class CadastroAlimentoGUI extends javax.swing.JInternalFrame {
         initComponents();
         setVisible(Boolean.TRUE);
         adicionaNovoAlimentoService = new AdicionaNovoAlimentoService();
+        setMaximizable(Boolean.TRUE);
+        setClosable(Boolean.TRUE);
     }
 
     public int salvarInformacoesAlimento() {
@@ -142,12 +143,10 @@ public class CadastroAlimentoGUI extends javax.swing.JInternalFrame {
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
 
         int id = salvarInformacoesAlimento();
-        if (id > 0) {
-            //JOptionPane.showMessageDialog(null, "Salvo com Sucesso!", this.getTitle(), JOptionPane.INFORMATION_MESSAGE);
-            Message.info(this.getTitle());
+        if (id > 0) {           
+            MessageCadastro.salvo(this.getTitle());
         } else {
-            //JOptionPane.showMessageDialog(null, "Produto ja Cadastrado!", this.getTitle(), JOptionPane.WARNING_MESSAGE);
-            Message.warning(this.getTitle());
+            MessageCadastro.jaCadastrado(this.getTitle());
         }
         
         txtDescricao.setText("");

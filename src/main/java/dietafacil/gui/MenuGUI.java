@@ -1,9 +1,12 @@
 package dietafacil.gui;
 
+import java.util.Objects;
+
 public class MenuGUI extends javax.swing.JFrame {
     
     private ConsultaAlimentoGUI consultaAlimentoGUI;
-
+    private CalcularMacrosRefeicaoGUI calcularMacrosRefeicaoGUI;
+            
     public MenuGUI() {
         initComponents();
         setVisible(Boolean.TRUE);
@@ -18,6 +21,8 @@ public class MenuGUI extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jConsulta = new javax.swing.JMenu();
         jAlimento = new javax.swing.JMenuItem();
+        jRefeicao = new javax.swing.JMenu();
+        jCalcularMacro = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DietaFacil");
@@ -48,6 +53,18 @@ public class MenuGUI extends javax.swing.JFrame {
 
         jMenuBar1.add(jConsulta);
 
+        jRefeicao.setText("Refeição");
+
+        jCalcularMacro.setText("Calcular Macros");
+        jCalcularMacro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCalcularMacroActionPerformed(evt);
+            }
+        });
+        jRefeicao.add(jCalcularMacro);
+
+        jMenuBar1.add(jRefeicao);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -65,10 +82,20 @@ public class MenuGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAlimentoActionPerformed
+        if(Objects.isNull(consultaAlimentoGUI)){
         consultaAlimentoGUI = new ConsultaAlimentoGUI();
+        }
         consultaAlimentoGUI.setVisible(Boolean.TRUE);
         DesktopManager.adicionar(consultaAlimentoGUI);
     }//GEN-LAST:event_jAlimentoActionPerformed
+
+    private void jCalcularMacroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCalcularMacroActionPerformed
+        if(Objects.isNull(calcularMacrosRefeicaoGUI)){
+            calcularMacrosRefeicaoGUI = new CalcularMacrosRefeicaoGUI();
+        }
+        calcularMacrosRefeicaoGUI.setVisible(Boolean.TRUE);
+        DesktopManager.adicionar(calcularMacrosRefeicaoGUI);
+    }//GEN-LAST:event_jCalcularMacroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -108,7 +135,9 @@ public class MenuGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktop;
     private javax.swing.JMenuItem jAlimento;
+    private javax.swing.JMenuItem jCalcularMacro;
     private javax.swing.JMenu jConsulta;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jRefeicao;
     // End of variables declaration//GEN-END:variables
 }
