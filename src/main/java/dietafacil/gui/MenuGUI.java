@@ -5,7 +5,7 @@ import java.util.Objects;
 public class MenuGUI extends javax.swing.JFrame {
     
     private ConsultaAlimentoGUI consultaAlimentoGUI;
-    private CalcularMacrosRefeicaoGUI calcularMacrosRefeicaoGUI;
+    private ConsultaRefeicaoGUI consultaRefeicaoGUI;
             
     public MenuGUI() {
         initComponents();
@@ -40,10 +40,10 @@ public class MenuGUI extends javax.swing.JFrame {
         );
 
         jConsulta.setMnemonic('C');
-        jConsulta.setText("Consulta");
+        jConsulta.setText("Alimento");
 
         jAlimento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        jAlimento.setText("Alimento");
+        jAlimento.setText("Consulta");
         jAlimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jAlimentoActionPerformed(evt);
@@ -55,7 +55,7 @@ public class MenuGUI extends javax.swing.JFrame {
 
         jRefeicao.setText("Refeição");
 
-        jCalcularMacro.setText("Calcular Macros");
+        jCalcularMacro.setText("Consulta");
         jCalcularMacro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCalcularMacroActionPerformed(evt);
@@ -90,11 +90,11 @@ public class MenuGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jAlimentoActionPerformed
 
     private void jCalcularMacroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCalcularMacroActionPerformed
-        if(Objects.isNull(calcularMacrosRefeicaoGUI)){
-            calcularMacrosRefeicaoGUI = new CalcularMacrosRefeicaoGUI();
+        if(Objects.isNull(consultaRefeicaoGUI)){
+            consultaRefeicaoGUI = new ConsultaRefeicaoGUI();
         }
-        calcularMacrosRefeicaoGUI.setVisible(Boolean.TRUE);
-        DesktopManager.adicionar(calcularMacrosRefeicaoGUI);
+        consultaRefeicaoGUI.setVisible(Boolean.TRUE);
+        DesktopManager.adicionar(consultaRefeicaoGUI);
     }//GEN-LAST:event_jCalcularMacroActionPerformed
 
     /**

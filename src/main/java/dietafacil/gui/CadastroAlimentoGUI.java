@@ -1,31 +1,35 @@
 package dietafacil.gui;
 
 import dietafacil.modelo.Alimento;
-import dietafacil.service.AdicionaNovoAlimentoService;
+import dietafacil.service.AdicionaAlimentoService;
 import dietafacil.shared.MessageCadastro;
+import javax.swing.SwingUtilities;
 
 public class CadastroAlimentoGUI extends javax.swing.JInternalFrame {
 
-    private final AdicionaNovoAlimentoService adicionaNovoAlimentoService;
+    private final AdicionaAlimentoService adicionaAlimentoService;
     private Alimento alimento;
 
     public CadastroAlimentoGUI() {
         initComponents();
         setVisible(Boolean.TRUE);
-        adicionaNovoAlimentoService = new AdicionaNovoAlimentoService();
+        adicionaAlimentoService = new AdicionaAlimentoService();
         setMaximizable(Boolean.TRUE);
         setClosable(Boolean.TRUE);
+        SwingUtilities.invokeLater(() -> {
+            moveToFront();
+        });
     }
 
     public int salvarInformacoesAlimento() {
         String descricao = txtDescricao.getText();
-        int carboidrato = Integer.parseInt(txtCarboidrato.getText());
-        int proteina = Integer.parseInt(txtProteina.getText());
-        int gordura = Integer.parseInt(txtGordura.getText());
-        int caloria = Integer.parseInt(txtCalorias.getText());
+        double carboidrato = Double.parseDouble(txtCarboidrato.getText());
+        double proteina = Double.parseDouble(txtProteina.getText());
+        double gordura = Double.parseDouble(txtGordura.getText());
+        double caloria = Double.parseDouble(txtCalorias.getText());
 
         alimento = new Alimento(descricao, carboidrato, proteina, gordura, caloria);
-        return adicionaNovoAlimentoService.adicionar(alimento);
+        return adicionaAlimentoService.adicionar(alimento);
     }
 
     @SuppressWarnings("unchecked")
@@ -53,20 +57,47 @@ public class CadastroAlimentoGUI extends javax.swing.JInternalFrame {
 
         jScrollPane1.setViewportView(txtDescricao);
 
+        txtCarboidrato.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtCarboidrato.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCarboidratoKeyTyped(evt);
+            }
+        });
         jScrollPane2.setViewportView(txtCarboidrato);
 
         lbDescricao.setText("Descricao");
 
         lbCarboidrato.setText("Carboidratos");
 
+        txtProteina.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtProteinaKeyTyped(evt);
+            }
+        });
         jScrollPane3.setViewportView(txtProteina);
 
         jLabel3.setText("Proteinas");
 
+        jScrollPane5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jScrollPane5KeyTyped(evt);
+            }
+        });
+
+        txtGordura.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtGorduraKeyTyped(evt);
+            }
+        });
         jScrollPane5.setViewportView(txtGordura);
 
         lbGordura.setText("Gorduras");
 
+        txtCalorias.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCaloriasKeyTyped(evt);
+            }
+        });
         jScrollPane6.setViewportView(txtCalorias);
 
         lbCalorias.setText("Calorias");
@@ -141,14 +172,13 @@ public class CadastroAlimentoGUI extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-
         int id = salvarInformacoesAlimento();
-        if (id > 0) {           
+        if (id > 0) {
             MessageCadastro.salvo(this.getTitle());
         } else {
             MessageCadastro.jaCadastrado(this.getTitle());
         }
-        
+
         txtDescricao.setText("");
         txtCarboidrato.setText("");
         txtProteina.setText("");
@@ -156,6 +186,41 @@ public class CadastroAlimentoGUI extends javax.swing.JInternalFrame {
         txtCalorias.setText("");
         txtDescricao.requestFocus();
     }//GEN-LAST:event_btSalvarActionPerformed
+
+    private void txtCarboidratoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCarboidratoKeyTyped
+        String caracteresPermitidos = "0123456789.";
+        if (!caracteresPermitidos.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCarboidratoKeyTyped
+
+    private void txtProteinaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProteinaKeyTyped
+        String caracteresPermitidos = "0123456789.";
+        if (!caracteresPermitidos.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtProteinaKeyTyped
+
+    private void jScrollPane5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jScrollPane5KeyTyped
+        String caracteresPermitidos = "0123456789.";
+        if (!caracteresPermitidos.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jScrollPane5KeyTyped
+
+    private void txtCaloriasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCaloriasKeyTyped
+        String caracteresPermitidos = "0123456789.";
+        if (!caracteresPermitidos.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCaloriasKeyTyped
+
+    private void txtGorduraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGorduraKeyTyped
+        String caracteresPermitidos = "0123456789.";
+        if (!caracteresPermitidos.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtGorduraKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

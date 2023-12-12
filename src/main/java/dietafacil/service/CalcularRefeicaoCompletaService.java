@@ -10,6 +10,7 @@ public class CalcularRefeicaoCompletaService {
         double totalProteina = 0;
         double totalGordura = 0;
         double totalCalorias = 0;
+        double totalPeso = 0;
         
         for(AlimentoDTO alimento : pListaAlimento){
             totalCarboidrato += alimento.getCarboidrato();
@@ -17,6 +18,6 @@ public class CalcularRefeicaoCompletaService {
             totalGordura += alimento.getGordura();
             totalCalorias += alimento.getCalorias();
         }
-        return new AlimentoDTO (totalCarboidrato, totalProteina, totalGordura, totalCalorias);
+        return new AlimentoDTO (totalCarboidrato, totalProteina, totalGordura, totalCalorias, totalPeso);
     }
 }

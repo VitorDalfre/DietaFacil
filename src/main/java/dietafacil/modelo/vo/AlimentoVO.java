@@ -1,8 +1,8 @@
-package dietafacil.modelo;
+package dietafacil.modelo.vo;
 
-import dietafacil.modelo.vo.AlimentoVO;
+import dietafacil.modelo.Alimento;
 
-public class Alimento {
+public class AlimentoVO {
 
     private final String descricao;
     private final double carboidrato;
@@ -10,7 +10,7 @@ public class Alimento {
     private final double gordura;
     private final double calorias;
 
-    public Alimento(String pDescricao, double pCarboidrato, double pProteina, double pGordura, double pCalorias) {
+    public AlimentoVO(String pDescricao, double pCarboidrato, double pProteina, double pGordura, double pCalorias) {
         this.descricao = pDescricao;
         this.carboidrato = pCarboidrato;
         this.proteina = pProteina;
@@ -38,16 +38,7 @@ public class Alimento {
         return calorias;
     }
 
-    public AlimentoVO toAlimentoVO() {
-        return new AlimentoVO(descricao, carboidrato, proteina, gordura, calorias);
-    }
-
-    @Override
-    public String toString() {
-        return "\n" + descricao + " - 100g \n"
-                + "Carboidratos: - " + carboidrato + "\n"
-                + "Proteinas: - " + proteina + "\n"
-                + "Gorduras: - " + gordura + "\n"
-                + "Calorias: - " + calorias + "\n";
+    public Alimento toAlimento(){
+        return new Alimento(descricao, carboidrato, proteina, gordura, calorias);
     }
 }

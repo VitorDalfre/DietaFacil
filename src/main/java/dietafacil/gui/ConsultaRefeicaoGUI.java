@@ -1,24 +1,28 @@
 package dietafacil.gui;
 
-import dietafacil.modelo.Alimento;
-import dietafacil.service.ConsultaAlimentoService;
-import java.util.ArrayList;
+import dietafacil.shared.MessageData;
+import java.text.ParseException;
 import java.util.Objects;
 import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
-public class ConsultaAlimentoGUI extends javax.swing.JInternalFrame {
+public class ConsultaRefeicaoGUI extends javax.swing.JInternalFrame {
 
-    private final ConsultaAlimentoService consultaAlimentoService;
-    private CadastroAlimentoGUI cadastroAlimentoGUI;
+    MaskFormatter mf;
+    private CadastroRefeicaoGUI cadastroRefeicaoGUI;
 
-    public ConsultaAlimentoGUI() {
+    public ConsultaRefeicaoGUI() {
+        try {
+            mf = new MaskFormatter("##/##/####");
+        } catch (ParseException ex) {
+            MessageData.invalida(title);
+        }
         initComponents();
         setVisible(Boolean.TRUE);
         SwingUtilities.invokeLater(() -> {
             moveToFront();
         });
-        consultaAlimentoService = new ConsultaAlimentoService();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -26,14 +30,13 @@ public class ConsultaAlimentoGUI extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         btConsultar = new javax.swing.JButton();
+        jfData = new javax.swing.JFormattedTextField(mf);
+        lbData = new javax.swing.JLabel();
         btAdicionar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabela = new javax.swing.JTable();
 
         setClosable(true);
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximizable(true);
-        setTitle("Consulta de Alimento");
+        setTitle("Consulta de Refeição");
 
         btConsultar.setText("Consultar");
         btConsultar.addActionListener(new java.awt.event.ActionListener() {
@@ -42,6 +45,14 @@ public class ConsultaAlimentoGUI extends javax.swing.JInternalFrame {
             }
         });
 
+        jfData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jfDataActionPerformed(evt);
+            }
+        });
+
+        lbData.setText("Data");
+
         btAdicionar.setText("Adicionar");
         btAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -49,77 +60,61 @@ public class ConsultaAlimentoGUI extends javax.swing.JInternalFrame {
             }
         });
 
-        tabela.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Descricao", "Carboidrato", "Proteina", "Gordura", "Calorias"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tabela);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btConsultar)
+                        .addComponent(lbData)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jfData, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btAdicionar)
-                        .addGap(0, 473, Short.MAX_VALUE)))
+                        .addComponent(btConsultar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 438, Short.MAX_VALUE)
+                        .addComponent(btAdicionar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(lbData)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jfData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btConsultar)
                     .addComponent(btAdicionar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(360, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
-        ArrayList<Alimento> listaAlimento = consultaAlimentoService.consultaTodosAlimento();
-        DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
-        modelo.setNumRows(0);
 
-        for (Alimento alimento : listaAlimento) {
-            Object[] dados = {alimento.getDescricao(), alimento.getCarboidrato(), alimento.getProteina(), alimento.getGordura(), alimento.getCalorias()};
-            modelo.addRow(dados);
-        }
     }//GEN-LAST:event_btConsultarActionPerformed
 
+    private void jfDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jfDataActionPerformed
+
     private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
-        if(Objects.isNull(cadastroAlimentoGUI)) {
-            cadastroAlimentoGUI = new CadastroAlimentoGUI();
+        if (Objects.isNull(cadastroRefeicaoGUI)) {
+            cadastroRefeicaoGUI = new CadastroRefeicaoGUI();
         }
-        DesktopManager.adicionar(cadastroAlimentoGUI);
-        cadastroAlimentoGUI.setVisible(Boolean.TRUE);
+        cadastroRefeicaoGUI.setVisible(Boolean.TRUE);
+        DesktopManager.adicionar(cadastroRefeicaoGUI);
     }//GEN-LAST:event_btAdicionarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdicionar;
     private javax.swing.JButton btConsultar;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabela;
+    private javax.swing.JFormattedTextField jfData;
+    private javax.swing.JLabel lbData;
     // End of variables declaration//GEN-END:variables
 }

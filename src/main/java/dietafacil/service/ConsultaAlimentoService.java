@@ -2,7 +2,7 @@ package dietafacil.service;
 
 import dietafacil.dao.ConsultaAlimentoDAO;
 import dietafacil.modelo.Alimento;
-import dietafacil.vo.AlimentoVO;
+import dietafacil.modelo.vo.AlimentoVO;
 
 import java.util.ArrayList;
 
