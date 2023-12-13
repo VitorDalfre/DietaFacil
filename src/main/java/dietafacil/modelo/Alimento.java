@@ -1,7 +1,5 @@
 package dietafacil.modelo;
 
-import dietafacil.modelo.vo.AlimentoVO;
-
 public class Alimento {
 
     private final String descricao;
@@ -9,6 +7,7 @@ public class Alimento {
     private final double proteina;
     private final double gordura;
     private final double calorias;
+    private double peso;
 
     public Alimento(String pDescricao, double pCarboidrato, double pProteina, double pGordura, double pCalorias) {
         this.descricao = pDescricao;
@@ -37,9 +36,9 @@ public class Alimento {
     public double getCalorias() {
         return calorias;
     }
-
-    public AlimentoVO toAlimentoVO() {
-        return new AlimentoVO(descricao, carboidrato, proteina, gordura, calorias);
+    
+    public double getPeso(){
+        return peso;
     }
 
     @Override

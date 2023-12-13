@@ -1,7 +1,6 @@
 package dietafacil.dao;
 
 import dietafacil.ConexaoComBanco;
-import dietafacil.modelo.Alimento;
 import dietafacil.modelo.vo.AlimentoVO;
 
 import java.sql.ResultSet;

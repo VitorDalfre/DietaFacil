@@ -1,7 +1,5 @@
 package dietafacil.modelo.vo;
 
-import dietafacil.modelo.Alimento;
-
 public class AlimentoVO {
 
     private final String descricao;
@@ -9,6 +7,16 @@ public class AlimentoVO {
     private final double proteina;
     private final double gordura;
     private final double calorias;
+    private final double peso;
+
+    public AlimentoVO(String pDescricao, double pCarboidrato, double pProteina, double pGordura, double pCalorias, double pPeso) {
+        this.descricao = pDescricao;
+        this.carboidrato = pCarboidrato;
+        this.proteina = pProteina;
+        this.gordura = pGordura;
+        this.calorias = pCalorias;
+        this.peso = pPeso;
+    }
 
     public AlimentoVO(String pDescricao, double pCarboidrato, double pProteina, double pGordura, double pCalorias) {
         this.descricao = pDescricao;
@@ -16,6 +24,7 @@ public class AlimentoVO {
         this.proteina = pProteina;
         this.gordura = pGordura;
         this.calorias = pCalorias;
+        this.peso = 0;
     }
 
     public String getDescricao() {
@@ -38,7 +47,8 @@ public class AlimentoVO {
         return calorias;
     }
 
-    public Alimento toAlimento(){
-        return new Alimento(descricao, carboidrato, proteina, gordura, calorias);
+    public double getPeso() {
+        return peso;
     }
+
 }

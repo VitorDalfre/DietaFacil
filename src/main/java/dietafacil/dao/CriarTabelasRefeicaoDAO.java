@@ -64,6 +64,7 @@ public class CriarTabelasRefeicaoDAO {
             sql.append("CREATE TABLE alimentorefeicao (")
                     .append("id SERIAL PRIMARY KEY, ")
                     .append("id_refeicao INTEGER, ")
+                    .append("descricao VARCHAR (100), ")
                     .append("carboidrato NUMERIC(11,2) NOT NULL, ")
                     .append("proteina NUMERIC(11,2) NOT NULL, ")
                     .append("gordura NUMERIC(11,2) NOT NULL, ")

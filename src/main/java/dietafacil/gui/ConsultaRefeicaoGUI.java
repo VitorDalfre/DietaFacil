@@ -85,10 +85,10 @@ public class ConsultaRefeicaoGUI extends javax.swing.JInternalFrame {
                 .addComponent(lbData)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jfData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btConsultar)
-                    .addComponent(btAdicionar))
-                .addContainerGap(360, Short.MAX_VALUE))
+                    .addComponent(btAdicionar)
+                    .addComponent(jfData))
+                .addGap(364, 364, 364))
         );
 
         pack();

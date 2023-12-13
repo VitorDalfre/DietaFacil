@@ -1,6 +1,7 @@
 package dietafacil.modelo;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Refeicao {
 
@@ -10,14 +11,16 @@ public class Refeicao {
     private final double gordura;
     private final double calorias;
     private final double peso;
+    private final ArrayList<Alimento> listaAlimento;
 
-    public Refeicao(Date pDate, double pCarboidrato, double pProteina, double pGordura, double pCalorias, double pPeso) {
+    public Refeicao(Date pDate, double pCarboidrato, double pProteina, double pGordura, double pCalorias, double pPeso, ArrayList<Alimento> pListaAlimento) {
         this.data = pDate;
         this.carboidrato = pCarboidrato;
         this.proteina = pProteina;
         this.gordura = pGordura;
         this.calorias = pCalorias;
         this.peso = pPeso;
+        this.listaAlimento = pListaAlimento;
     }
 
     public Date getData() {

@@ -9,7 +9,7 @@ public class AlimentoVOFactory {
     }
 
     public static AlimentoVO create(Alimento pAlimento) {
-        return new AlimentoVO(pAlimento.getDescricao(), pAlimento.getCarboidrato(), pAlimento.getProteina(), pAlimento.getGordura(), pAlimento.getCalorias());
+        return new AlimentoVO(pAlimento.getDescricao(), pAlimento.getCarboidrato(), pAlimento.getProteina(), pAlimento.getGordura(), pAlimento.getCalorias(), pAlimento.getPeso());
     }
 
 }

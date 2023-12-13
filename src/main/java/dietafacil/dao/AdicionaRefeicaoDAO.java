@@ -1,12 +1,57 @@
 package dietafacil.dao;
 
+import dietafacil.ConexaoComBanco;
 import dietafacil.modelo.vo.AlimentoVO;
-
-import java.util.ArrayList;
+import dietafacil.modelo.vo.RefeicaoVO;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class AdicionaRefeicaoDAO {
 
-    public void adicionar(ArrayList<AlimentoVO> pLista, AlimentoVO pTotaisRefeicao){
+    private int adicionarRefeicao(RefeicaoVO pRefeicao) {
+        Statement stm;
+        ResultSet rst;
+        StringBuilder sql = new StringBuilder();
+
+        sql.append("INSERT INTO refeicao VALUES ('")
+                .append(pRefeicao.getData()).append("', ")
+                .append(pRefeicao.getCarboidrato()).append(", ")
+                .append(pRefeicao.getProteina()).append(", ")
+                .append(pRefeicao.getGordura()).append(", ")
+                .append(pRefeicao.getCalorias()).append(", ")
+                .append(pRefeicao.getPeso()).append(") ")
+                .append(" RETURNING id");
+
+        try {
+            stm = ConexaoComBanco.getConexao().createStatement();
+            rst = stm.executeQuery(sql.toString());
+
+            if (rst.next()) {
+                return rst.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return -1;
+    }
+
+    public void adicionaAlimentoRefeicao(RefeicaoVO pRefeicao) {
+        Statement stm;
+        StringBuilder sql = new StringBuilder();
+        int idRefeicao = adicionarRefeicao(pRefeicao);
+
+        for (AlimentoVO alimentoVO : pRefeicao.getListaAlimento()) {
+            sql.append("INSERT INTO alimentorefeicao VALUES (")
+                    .append(idRefeicao).append(", ")
+                    .append(alimentoVO.getCarboidrato()).append(", ")
+                    .append(alimentoVO.getProteina()).append(", ")
+                    .append(alimentoVO.getGordura()).append(", ")
+                    .append(alimentoVO.getCalorias()).append(", ")
+                    .append(alimentoVO.getPeso());
+
+        }
 
     }
+
 }
