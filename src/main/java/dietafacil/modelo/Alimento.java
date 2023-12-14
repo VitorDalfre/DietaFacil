@@ -16,9 +16,22 @@ public class Alimento {
         this.gordura = pGordura;
         this.calorias = pCalorias;
     }
+    
+    public Alimento(String pDescricao, double pCarboidrato, double pProteina, double pGordura, double pCalorias, double pPeso) {
+        this.descricao = pDescricao;
+        this.carboidrato = pCarboidrato;
+        this.proteina = pProteina;
+        this.gordura = pGordura;
+        this.calorias = pCalorias;
+        this.peso = pPeso;
+    }
 
     public String getDescricao() {
         return descricao;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
     }
 
     public double getCarboidrato() {

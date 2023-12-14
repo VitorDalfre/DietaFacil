@@ -1,17 +1,16 @@
 package dietafacil.service;
 
 import dietafacil.modelo.Alimento;
-import dietafacil.modelo.dto.AlimentoDTO;
 
 public class CalcularMacrosRefeicaoService {
  
-    public AlimentoDTO calcularMacros(Alimento pAlimento, double pPeso) {
-        double carboidrato = calcularCarboidratoAlimento(pAlimento.getCarboidrato(), pPeso);
-        double proteina = calcularProteinaAlimento(pAlimento.getProteina(), pPeso);
-        double gordura = calcularGorduraAlimento(pAlimento.getGordura(), pPeso);
-        double calorias = calcularCaloriasAlimento(pAlimento.getCalorias(), pPeso);
+    public Alimento calcularMacros(Alimento pAlimento) {
+        double carboidrato = calcularCarboidratoAlimento(pAlimento.getCarboidrato(), pAlimento.getPeso());
+        double proteina = calcularProteinaAlimento(pAlimento.getProteina(), pAlimento.getPeso());
+        double gordura = calcularGorduraAlimento(pAlimento.getGordura(), pAlimento.getPeso());
+        double calorias = calcularCaloriasAlimento(pAlimento.getCalorias(), pAlimento.getPeso());
 
-        return new AlimentoDTO (pAlimento.getDescricao(), carboidrato, proteina, gordura, calorias, pPeso);
+        return new Alimento (pAlimento.getDescricao(), carboidrato, proteina, gordura, calorias, pAlimento.getPeso());
     }
     
     private double calcularCarboidratoAlimento(double pCarboidrato, double pPeso){

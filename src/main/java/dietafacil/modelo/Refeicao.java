@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Refeicao {
 
-    private final Date data;
+    private final String data;
     private final double carboidrato;
     private final double proteina;
     private final double gordura;
@@ -13,7 +13,7 @@ public class Refeicao {
     private final double peso;
     private final ArrayList<Alimento> listaAlimento;
 
-    public Refeicao(Date pDate, double pCarboidrato, double pProteina, double pGordura, double pCalorias, double pPeso, ArrayList<Alimento> pListaAlimento) {
+    public Refeicao(String pDate, double pCarboidrato, double pProteina, double pGordura, double pCalorias, double pPeso, ArrayList<Alimento> pListaAlimento) {
         this.data = pDate;
         this.carboidrato = pCarboidrato;
         this.proteina = pProteina;
@@ -23,8 +23,12 @@ public class Refeicao {
         this.listaAlimento = pListaAlimento;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
+    }
+
+    public ArrayList<Alimento> getListaAlimento() {
+        return listaAlimento;
     }
 
     public double getCarboidrato() {

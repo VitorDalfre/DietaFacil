@@ -1,10 +1,9 @@
 package dietafacil.gui;
 
-import dietafacil.modelo.dto.AlimentoDTO;
+import dietafacil.modelo.Alimento;
 import dietafacil.shared.MessageData;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
@@ -28,20 +27,20 @@ public class RefeicaoGUI extends javax.swing.JInternalFrame {
         setClosable(Boolean.TRUE);
     }
 
-    public void mostraValoresTotais(AlimentoDTO pAlimentoDTO, ArrayList<AlimentoDTO> pListaAlimento, String data) {
-        pnCarboidrato.setText(String.valueOf(pAlimentoDTO.getCarboidrato()));
-        pnProteina.setText(String.valueOf(pAlimentoDTO.getProteina()));
-        pnGordura.setText(String.valueOf(pAlimentoDTO.getGordura()));
-        pnCalorias.setText(String.valueOf(pAlimentoDTO.getCalorias()));
+    public void mostraValoresTotais(Alimento pAlimento, ArrayList<Alimento> pListaAlimento, String data) {
+        pnCarboidrato.setText(String.valueOf(pAlimento.getCarboidrato()));
+        pnProteina.setText(String.valueOf(pAlimento.getProteina()));
+        pnGordura.setText(String.valueOf(pAlimento.getGordura()));
+        pnCalorias.setText(String.valueOf(pAlimento.getCalorias()));
         jfData.setValue(data);  
 
         adicionaAlimentoTabela(pListaAlimento);
     }
 
-    private void adicionaAlimentoTabela(ArrayList<AlimentoDTO> pListaAlimento) {
+    private void adicionaAlimentoTabela(ArrayList<Alimento> pListaAlimento) {
         DefaultTableModel modelo = (DefaultTableModel) tabelaAlimentos.getModel();
         modelo.setNumRows(0);
-        for (AlimentoDTO alimento : pListaAlimento) {
+        for (Alimento alimento : pListaAlimento) {
             Object[] dados = {alimento.getDescricao(), alimento.getCarboidrato(), alimento.getProteina(), alimento.getGordura(), alimento.getCalorias(), alimento.getPeso()};
             modelo.addRow(dados);
         }
@@ -240,7 +239,4 @@ public class RefeicaoGUI extends javax.swing.JInternalFrame {
     private javax.swing.JTable tabelaAlimentos;
     // End of variables declaration//GEN-END:variables
 
-    void mostraValores(AlimentoDTO calcularRefeicao) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

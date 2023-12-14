@@ -31,7 +31,7 @@ public class ConsultaAlimentoDAO {
         }
     }
 
-    public AlimentoVO consultarPorDescricao(String pDescricaoAlimento) {
+    public AlimentoVO consultaPorDescricao(String pDescricaoAlimento) {
         Statement stm;
         ResultSet rst;
         AlimentoVO alimentoVO = null;

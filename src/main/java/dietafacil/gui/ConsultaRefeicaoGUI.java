@@ -9,7 +9,7 @@ import javax.swing.text.MaskFormatter;
 public class ConsultaRefeicaoGUI extends javax.swing.JInternalFrame {
 
     MaskFormatter mf;
-    private CadastroRefeicaoGUI cadastroRefeicaoGUI;
+    private AdicionaRefeicaoGUI cadastroRefeicaoGUI;
 
     public ConsultaRefeicaoGUI() {
         try {
@@ -104,7 +104,7 @@ public class ConsultaRefeicaoGUI extends javax.swing.JInternalFrame {
 
     private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
         if (Objects.isNull(cadastroRefeicaoGUI)) {
-            cadastroRefeicaoGUI = new CadastroRefeicaoGUI();
+            cadastroRefeicaoGUI = new AdicionaRefeicaoGUI();
         }
         cadastroRefeicaoGUI.setVisible(Boolean.TRUE);
         DesktopManager.adicionar(cadastroRefeicaoGUI);

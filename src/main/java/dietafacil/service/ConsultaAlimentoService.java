@@ -17,23 +17,15 @@ public class ConsultaAlimentoService {
     
     public ArrayList<Alimento> consultaTodosAlimento(){
         ArrayList<AlimentoVO> lista = consultaAlimentoDAO.consultaTodosAlimentos();
-        return listaVOparaLista(lista);
+        return AlimentoFactory.createLista(lista);
     }
 
     public Alimento consultarPorDescricao(String pDescricaoAlimento){
-        AlimentoVO alimentoVO = consultaAlimentoDAO.consultarPorDescricao(pDescricaoAlimento);
+        AlimentoVO alimentoVO = consultaAlimentoDAO.consultaPorDescricao(pDescricaoAlimento);
         return  AlimentoFactory.create(alimentoVO);
     }
 
     public boolean existeAlimento(String pDescricaoAlimento) {
         return consultaAlimentoDAO.existeNoBanco(pDescricaoAlimento);
-    }
-
-    private ArrayList<Alimento> listaVOparaLista(ArrayList<AlimentoVO> pListaVO){
-        ArrayList<Alimento> listaAlimento = new ArrayList<>();
-        for(AlimentoVO alimentoVO : pListaVO){
-            listaAlimento.add(AlimentoFactory.create(alimentoVO));
-        }
-        return listaAlimento;
     }
 }

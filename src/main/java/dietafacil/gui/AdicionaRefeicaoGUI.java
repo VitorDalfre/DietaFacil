@@ -1,13 +1,12 @@
 package dietafacil.gui;
 
 import dietafacil.modelo.Alimento;
-import dietafacil.modelo.dto.AlimentoDTO;
+import dietafacil.modelo.Refeicao;
+import dietafacil.service.AdicionaAlimentoRefeicaoService;
+import dietafacil.service.AdicionaRefeicaoService;
 import dietafacil.service.CalcularMacrosRefeicaoService;
 import dietafacil.service.CalcularRefeicaoCompletaService;
-import dietafacil.service.ConsultaAlimentoService;
-import dietafacil.shared.MessageCalculo;
 import dietafacil.shared.MessageData;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,16 +17,18 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
-public class CadastroRefeicaoGUI extends javax.swing.JInternalFrame {
+public class AdicionaRefeicaoGUI extends javax.swing.JInternalFrame {
 
-    private final ConsultaAlimentoService consultaAlimentoService;
+    private final AdicionaAlimentoRefeicaoService adicionaAlimentoRefeicaoService;
     private final CalcularMacrosRefeicaoService calcularMacrosRefeicaoService;
     private final CalcularRefeicaoCompletaService calcularRefeicaoCompletaService;
+    private final AdicionaRefeicaoService adicionaRefeicaoService;
+    private final ArrayList<Alimento> alimentosCalculados = new ArrayList<>();
+    private final ArrayList<Alimento> alimentosDaRefeicao = new ArrayList<>();
     private RefeicaoGUI refeicaoGUI;
-    private final ArrayList<AlimentoDTO> alimentosCalculados = new ArrayList<>();
     MaskFormatter mf;
 
-    public CadastroRefeicaoGUI() {
+    public AdicionaRefeicaoGUI() {
         try {
             mf = new MaskFormatter("##/##/####");
         } catch (ParseException ex) {
@@ -38,9 +39,10 @@ public class CadastroRefeicaoGUI extends javax.swing.JInternalFrame {
         SwingUtilities.invokeLater(() -> {
             moveToFront();
         });
-        consultaAlimentoService = new ConsultaAlimentoService();
         calcularMacrosRefeicaoService = new CalcularMacrosRefeicaoService();
         calcularRefeicaoCompletaService = new CalcularRefeicaoCompletaService();
+        adicionaRefeicaoService = new AdicionaRefeicaoService();
+        adicionaAlimentoRefeicaoService = new AdicionaAlimentoRefeicaoService();
     }
 
     @SuppressWarnings("unchecked")
@@ -176,50 +178,48 @@ public class CadastroRefeicaoGUI extends javax.swing.JInternalFrame {
     }
 
     private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
-        String alimento = txtAlimento.getText(); 
+        String alimento = txtAlimento.getText();
         double peso = Double.parseDouble(txtPeso.getText());
 
-        if (consultaAlimentoService.existeAlimento(alimento)) {
-            Alimento alimentoRecebido = consultaAlimentoService.consultarPorDescricao(alimento);
+        Alimento alimentoAdicionado = adicionaAlimentoRefeicaoService.adicionar(alimento, peso);
+        alimentosDaRefeicao.add(alimentoAdicionado);
 
-            AlimentoDTO alimentoCalculadoPorPeso = calcularMacrosRefeicaoService.calcularMacros(alimentoRecebido, peso);
-            alimentosCalculados.add(alimentoCalculadoPorPeso);
-            
-            adicionaAlimentoTabela(alimentoRecebido, peso);
-            zerarCamposAdicao();
-        } else {
-            MessageCalculo.alimentoNaoEncontrado(this.title);
-            zerarCamposAdicao();
-        }
+        Alimento macrosAlimentoAdicionado = calcularMacrosRefeicaoService.calcularMacros(alimentoAdicionado);
+        alimentosCalculados.add(macrosAlimentoAdicionado);
+
+        adicionaAlimentoTabela(alimentoAdicionado, peso);
+        zerarCamposAdicao();
     }//GEN-LAST:event_btAdicionarActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Formartar a data inserida
         Date data = null;
-        try{
+        try {
             data = sdf.parse(jfData.getText());
-        } catch(ParseException e){
+        } catch (ParseException e) {
             jfData.setFocusLostBehavior(JFormattedTextField.PERSIST);
         }
         String dataFormatada = sdf.format(data); // Pega a data e transforma em String
-        
-        if(Objects.isNull(refeicaoGUI)){ //Valida se classe já não está instanciada pela classe Object                     
-        refeicaoGUI = new RefeicaoGUI();        
+
+        if (Objects.isNull(refeicaoGUI)) { //Valida se o Objetp já não está instanciada pela classe Object                     
+            refeicaoGUI = new RefeicaoGUI();
         }
         DesktopManager.adicionar(refeicaoGUI);
         refeicaoGUI.setVisible(Boolean.TRUE);
-        
-        AlimentoDTO totalMacrosRefeicao = calcularRefeicaoCompletaService.calcularRefeicao(alimentosCalculados); //Retorna o total da Refeição (Carb, Prot, Gord e KCal)
-        refeicaoGUI.mostraValoresTotais(totalMacrosRefeicao, alimentosCalculados, dataFormatada); //Passa a Lista de Alimentos, totais e data da refeição
-        
-        
-        
+
+        Alimento valoresRefeicao = calcularRefeicaoCompletaService.calcularRefeicao(alimentosCalculados); //Retorna o total da Refeição (Carb, Prot, Gord e KCal)
+        refeicaoGUI.mostraValoresTotais(valoresRefeicao, alimentosCalculados, dataFormatada); //Passa a Lista de Alimentos, totais e data da refeição
+
+        Refeicao refeicao = new Refeicao(dataFormatada, valoresRefeicao.getCarboidrato(), valoresRefeicao.getProteina(),
+                valoresRefeicao.getGordura(), valoresRefeicao.getCalorias(), valoresRefeicao.getPeso(), alimentosDaRefeicao); //Crio a refeição com base nas infos
+        adicionaRefeicaoService.adicionar(refeicao);                                                                          //e passo para o BD salvar!
+
         alimentosCalculados.clear();
         limparTabela();
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void txtPesoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoKeyTyped
-        
+
     }//GEN-LAST:event_txtPesoKeyTyped
 
     private void jfDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfDataActionPerformed
@@ -232,8 +232,8 @@ public class CadastroRefeicaoGUI extends javax.swing.JInternalFrame {
         Object[] dados = {alimento.getDescricao(), pPeso};
         modelo.addRow(dados);
     }
-    
-    private void limparTabela(){
+
+    private void limparTabela() {
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
         modelo.setNumRows(0);
     }

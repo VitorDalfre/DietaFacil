@@ -5,12 +5,12 @@ import dietafacil.service.AdicionaAlimentoService;
 import dietafacil.shared.MessageCadastro;
 import javax.swing.SwingUtilities;
 
-public class CadastroAlimentoGUI extends javax.swing.JInternalFrame {
+public class AdicionaAlimentoGUI extends javax.swing.JInternalFrame {
 
     private final AdicionaAlimentoService adicionaAlimentoService;
     private Alimento alimento;
 
-    public CadastroAlimentoGUI() {
+    public AdicionaAlimentoGUI() {
         initComponents();
         setVisible(Boolean.TRUE);
         adicionaAlimentoService = new AdicionaAlimentoService();

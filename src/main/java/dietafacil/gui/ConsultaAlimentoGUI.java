@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 public class ConsultaAlimentoGUI extends javax.swing.JInternalFrame {
 
     private final ConsultaAlimentoService consultaAlimentoService;
-    private CadastroAlimentoGUI cadastroAlimentoGUI;
+    private AdicionaAlimentoGUI cadastroAlimentoGUI;
 
     public ConsultaAlimentoGUI() {
         initComponents();
@@ -110,7 +110,7 @@ public class ConsultaAlimentoGUI extends javax.swing.JInternalFrame {
 
     private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
         if(Objects.isNull(cadastroAlimentoGUI)) {
-            cadastroAlimentoGUI = new CadastroAlimentoGUI();
+            cadastroAlimentoGUI = new AdicionaAlimentoGUI();
         }
         DesktopManager.adicionar(cadastroAlimentoGUI);
         cadastroAlimentoGUI.setVisible(Boolean.TRUE);
