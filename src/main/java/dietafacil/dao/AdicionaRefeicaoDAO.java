@@ -53,16 +53,18 @@ public class AdicionaRefeicaoDAO {
                     .append(alimentoVO.getCalorias()).append(", ")
                     .append(alimentoVO.getPeso()).append(", '")
                     .append(alimentoVO.getDescricao()).append("')");
-            
-            try{
+
+            try {
                 stm = ConexaoComBanco.getConexao().createStatement();
                 stm.execute(sql.toString());
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
+            } finally {
+                sql.setLength(0);
             }
         }
     }
-    
+
     private String formatarData(String dataStringEntrada) {
         String formatacaoRecebida = "dd/MM/yyyy";
         String formatacaoDevolvida = "yyyy-MM-dd";
@@ -70,14 +72,13 @@ public class AdicionaRefeicaoDAO {
         try {
             SimpleDateFormat dataSem = new SimpleDateFormat(formatacaoRecebida);
             Date data = dataSem.parse(dataStringEntrada);
-            SimpleDateFormat dataFormatada = new SimpleDateFormat(formatacaoDevolvida);           
+            SimpleDateFormat dataFormatada = new SimpleDateFormat(formatacaoDevolvida);
             return dataFormatada.format(data);
-            
+
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
         }
     }
-    
 
 }

@@ -6,7 +6,10 @@ import dietafacil.service.AdicionaAlimentoRefeicaoService;
 import dietafacil.service.AdicionaRefeicaoService;
 import dietafacil.service.CalcularMacrosRefeicaoService;
 import dietafacil.service.CalcularRefeicaoCompletaService;
+import dietafacil.shared.MessageCadastro;
+import dietafacil.shared.MessageCalculo;
 import dietafacil.shared.MessageData;
+import dietafacil.shared.MessageRefeicao;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -182,7 +185,11 @@ public class AdicionaRefeicaoGUI extends javax.swing.JInternalFrame {
         double peso = Double.parseDouble(txtPeso.getText());
 
         Alimento alimentoAdicionado = adicionaAlimentoRefeicaoService.adicionar(alimento, peso);
-        alimentosDaRefeicao.add(alimentoAdicionado);
+        if (alimentoAdicionado != null) {
+            alimentosDaRefeicao.add(alimentoAdicionado);
+        } else {
+            MessageCalculo.alimentoNaoEncontrado(title);
+        }
 
         Alimento macrosAlimentoAdicionado = calcularMacrosRefeicaoService.calcularMacros(alimentoAdicionado);
         alimentosCalculados.add(macrosAlimentoAdicionado);
@@ -192,6 +199,10 @@ public class AdicionaRefeicaoGUI extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btAdicionarActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+        if(alimentosDaRefeicao.size() <= 0){
+            MessageRefeicao.refeicaoSemAlimento(title);
+            return;
+        }
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Formartar a data inserida
         Date data = null;
         try {
@@ -201,21 +212,22 @@ public class AdicionaRefeicaoGUI extends javax.swing.JInternalFrame {
         }
         String dataFormatada = sdf.format(data); // Pega a data e transforma em String
 
-        if (Objects.isNull(refeicaoGUI)) { //Valida se o Objetp já não está instanciada pela classe Object                     
+        if (Objects.isNull(refeicaoGUI)) { //Valida se o Objeto já não está instanciada pela classe Object                     
             refeicaoGUI = new RefeicaoGUI();
         }
         DesktopManager.adicionar(refeicaoGUI);
         refeicaoGUI.setVisible(Boolean.TRUE);
 
         Alimento valoresRefeicao = calcularRefeicaoCompletaService.calcularRefeicao(alimentosCalculados); //Retorna o total da Refeição (Carb, Prot, Gord e KCal)
-        refeicaoGUI.mostraValoresTotais(valoresRefeicao, alimentosCalculados, dataFormatada); //Passa a Lista de Alimentos, totais e data da refeição
+        refeicaoGUI.mostraValoresTotais(valoresRefeicao, alimentosCalculados, dataFormatada); //Mostra Lista de Alimentos, totais e data da refeição na tela
 
         Refeicao refeicao = new Refeicao(dataFormatada, valoresRefeicao.getCarboidrato(), valoresRefeicao.getProteina(),
-                valoresRefeicao.getGordura(), valoresRefeicao.getCalorias(), valoresRefeicao.getPeso(), alimentosDaRefeicao); //Crio a refeição com base nas infos
-        adicionaRefeicaoService.adicionar(refeicao);                                                                          //e passo para o BD salvar!
+                valoresRefeicao.getGordura(), valoresRefeicao.getCalorias(), valoresRefeicao.getPeso(), alimentosDaRefeicao); //Crio a refeição com base nas infos        
+        adicionaRefeicaoService.adicionar(refeicao); //Adiciona Refeição e Alimentos da mesma no banco                        //e passo para o BD salvar!
 
-        alimentosCalculados.clear();
         limparTabela();
+        alimentosCalculados.clear();
+        alimentosDaRefeicao.clear();
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void txtPesoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoKeyTyped
@@ -236,6 +248,7 @@ public class AdicionaRefeicaoGUI extends javax.swing.JInternalFrame {
     private void limparTabela() {
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
         modelo.setNumRows(0);
+        jfData.setValue(null);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

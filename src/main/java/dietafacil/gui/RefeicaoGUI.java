@@ -27,11 +27,11 @@ public class RefeicaoGUI extends javax.swing.JInternalFrame {
         setClosable(Boolean.TRUE);
     }
 
-    public void mostraValoresTotais(Alimento pAlimento, ArrayList<Alimento> pListaAlimento, String data) {
-        pnCarboidrato.setText(String.valueOf(pAlimento.getCarboidrato()));
-        pnProteina.setText(String.valueOf(pAlimento.getProteina()));
-        pnGordura.setText(String.valueOf(pAlimento.getGordura()));
-        pnCalorias.setText(String.valueOf(pAlimento.getCalorias()));
+    public void mostraValoresTotais(Alimento pValoresRefeicao, ArrayList<Alimento> pListaAlimento, String data) {
+        pnCarboidrato.setText(String.valueOf(pValoresRefeicao.getCarboidrato()));
+        pnProteina.setText(String.valueOf(pValoresRefeicao.getProteina()));
+        pnGordura.setText(String.valueOf(pValoresRefeicao.getGordura()));
+        pnCalorias.setText(String.valueOf(pValoresRefeicao.getCalorias()));
         jfData.setValue(data);  
 
         adicionaAlimentoTabela(pListaAlimento);

@@ -17,6 +17,7 @@ public class CalcularRefeicaoCompletaService {
             totalProteina += alimento.getProteina();
             totalGordura += alimento.getGordura();
             totalCalorias += alimento.getCalorias();
+            totalPeso += alimento.getPeso();
         }
         return new Alimento(null, totalCarboidrato, totalProteina, totalGordura, totalCalorias, totalPeso);
     }
