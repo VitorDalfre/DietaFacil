@@ -1,6 +1,5 @@
 package dietafacil.modelo.vo;
 
-import java.sql.Date;
 import java.util.ArrayList;
 
 public class RefeicaoVO {
@@ -21,6 +20,16 @@ public class RefeicaoVO {
         this.calorias = pCalorias;
         this.peso = pPeso;
         this.listaAlimento = pListaAlimento;
+    }
+    
+    public RefeicaoVO(String pDate, double pCarboidrato, double pProteina, double pGordura, double pCalorias, double pPeso) {
+        this.data = pDate;
+        this.carboidrato = pCarboidrato;
+        this.proteina = pProteina;
+        this.gordura = pGordura;
+        this.calorias = pCalorias;
+        this.peso = pPeso;
+        this.listaAlimento = null;
     }
 
     public ArrayList<AlimentoVO> getListaAlimento() {

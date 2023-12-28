@@ -22,6 +22,16 @@ public class Refeicao {
         this.peso = pPeso;
         this.listaAlimento = pListaAlimento;
     }
+    
+    public Refeicao(String pDate, double pCarboidrato, double pProteina, double pGordura, double pCalorias, double pPeso) {
+        this.data = pDate;
+        this.carboidrato = pCarboidrato;
+        this.proteina = pProteina;
+        this.gordura = pGordura;
+        this.calorias = pCalorias;
+        this.peso = pPeso;
+        this.listaAlimento = null;
+    }
 
     public String getData() {
         return data;

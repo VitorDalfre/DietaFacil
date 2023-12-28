@@ -52,7 +52,7 @@ public class ConsultaAlimentoDAO {
                         rst.getDouble("calorias"));
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao consulta produto! ");
+            throw new RuntimeException("Erro ao consultar produto! ");
         }
         return alimentoVO;
     }
@@ -78,7 +78,7 @@ public class ConsultaAlimentoDAO {
                 lista.add(alimentoVO);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao consultar produto! ");
         }
         return lista;
     }

@@ -12,6 +12,15 @@ public class RefeicaoFactory {
         return new Refeicao(pRefeicaoVO.getData(), pRefeicaoVO.getCarboidrato(), pRefeicaoVO.getProteina(),
                 pRefeicaoVO.getGordura(), pRefeicaoVO.getCalorias(), pRefeicaoVO.getPeso(), listaVOparaLista(pRefeicaoVO.getListaAlimento()));
     }
+    
+    public static ArrayList<Refeicao> listaRefeicao(ArrayList<RefeicaoVO> pListaRefVO){
+        ArrayList listaRefeicao = new ArrayList<>();
+        for(RefeicaoVO refVO : pListaRefVO){
+            Refeicao novaRef = createSemAlimento(refVO);
+            listaRefeicao.add(novaRef);
+        }
+        return listaRefeicao;
+    }
 
     private static ArrayList<Alimento> listaVOparaLista(ArrayList<AlimentoVO> pListaVO) {
         ArrayList<Alimento> listaAlimento = new ArrayList<>();
@@ -19,6 +28,11 @@ public class RefeicaoFactory {
             listaAlimento.add(AlimentoFactory.create(alimentoVO));
         }
         return listaAlimento;
+    }
+    
+    private static Refeicao createSemAlimento(RefeicaoVO pRefeicaoVO) {
+        return new Refeicao(pRefeicaoVO.getData(), pRefeicaoVO.getCarboidrato(), pRefeicaoVO.getProteina(),
+                pRefeicaoVO.getGordura(), pRefeicaoVO.getCalorias(), pRefeicaoVO.getPeso());
     }
 
 }

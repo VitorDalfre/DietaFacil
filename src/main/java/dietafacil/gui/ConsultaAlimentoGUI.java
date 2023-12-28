@@ -103,8 +103,8 @@ public class ConsultaAlimentoGUI extends javax.swing.JInternalFrame {
         modelo.setNumRows(0);
 
         for (Alimento alimento : listaAlimento) {
-            Object[] dados = {alimento.getDescricao(), alimento.getCarboidrato(), alimento.getProteina(), alimento.getGordura(), alimento.getCalorias()};
-            modelo.addRow(dados);
+            Object[] dadosTabela = {alimento.getDescricao(), alimento.getCarboidrato(), alimento.getProteina(), alimento.getGordura(), alimento.getCalorias()};
+            modelo.addRow(dadosTabela);
         }
     }//GEN-LAST:event_btConsultarActionPerformed
 

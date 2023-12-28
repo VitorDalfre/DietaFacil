@@ -11,19 +11,19 @@ public class AlimentoVO {
 
     public AlimentoVO(String pDescricao, double pCarboidrato, double pProteina, double pGordura, double pCalorias, double pPeso) {
         this.descricao = pDescricao;
-        this.carboidrato = pCarboidrato;
-        this.proteina = pProteina;
-        this.gordura = pGordura;
-        this.calorias = pCalorias;
-        this.peso = pPeso;
+        this.carboidrato = pCarboidrato * 100 / 100;
+        this.proteina = pProteina * 100 / 100;
+        this.gordura = pGordura * 100 / 100;
+        this.calorias = pCalorias * 100 / 100;
+        this.peso = pPeso * 100 / 100;
     }
 
     public AlimentoVO(String pDescricao, double pCarboidrato, double pProteina, double pGordura, double pCalorias) {
         this.descricao = pDescricao;
-        this.carboidrato = pCarboidrato;
-        this.proteina = pProteina;
-        this.gordura = pGordura;
-        this.calorias = pCalorias;
+        this.carboidrato = pCarboidrato * 100 / 100;
+        this.proteina = pProteina * 100 / 100;
+        this.gordura = pGordura * 100 / 100;
+        this.calorias = pCalorias * 100 / 100;
         this.peso = 0;
     }
 

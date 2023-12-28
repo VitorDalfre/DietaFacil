@@ -6,16 +6,15 @@ import dietafacil.service.AdicionaAlimentoRefeicaoService;
 import dietafacil.service.AdicionaRefeicaoService;
 import dietafacil.service.CalcularMacrosRefeicaoService;
 import dietafacil.service.CalcularRefeicaoCompletaService;
-import dietafacil.shared.MessageCadastro;
+import dietafacil.shared.ConverteData;
 import dietafacil.shared.MessageCalculo;
 import dietafacil.shared.MessageData;
 import dietafacil.shared.MessageRefeicao;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Objects;
-import javax.swing.JFormattedTextField;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
@@ -199,18 +198,18 @@ public class AdicionaRefeicaoGUI extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btAdicionarActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        if(alimentosDaRefeicao.size() <= 0){
+        if (alimentosDaRefeicao.size() <= 0) {
             MessageRefeicao.refeicaoSemAlimento(title);
             return;
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Formartar a data inserida
-        Date data = null;
+
+        String data = null;
         try {
-            data = sdf.parse(jfData.getText());
-        } catch (ParseException e) {
-            jfData.setFocusLostBehavior(JFormattedTextField.PERSIST);
+            data = ConverteData.converte(jfData.getText());
+        } catch (ParseException ex) {
+            jfData.setText("");
+            MessageData.invalida(title);
         }
-        String dataFormatada = sdf.format(data); // Pega a data e transforma em String
 
         if (Objects.isNull(refeicaoGUI)) { //Valida se o Objeto já não está instanciada pela classe Object                     
             refeicaoGUI = new RefeicaoGUI();
@@ -219,9 +218,9 @@ public class AdicionaRefeicaoGUI extends javax.swing.JInternalFrame {
         refeicaoGUI.setVisible(Boolean.TRUE);
 
         Alimento valoresRefeicao = calcularRefeicaoCompletaService.calcularRefeicao(alimentosCalculados); //Retorna o total da Refeição (Carb, Prot, Gord e KCal)
-        refeicaoGUI.mostraValoresTotais(valoresRefeicao, alimentosCalculados, dataFormatada); //Mostra Lista de Alimentos, totais e data da refeição na tela
+        refeicaoGUI.mostraValoresTotais(valoresRefeicao, alimentosCalculados, data); //Mostra Lista de Alimentos, totais e data da refeição na tela
 
-        Refeicao refeicao = new Refeicao(dataFormatada, valoresRefeicao.getCarboidrato(), valoresRefeicao.getProteina(),
+        Refeicao refeicao = new Refeicao(data, valoresRefeicao.getCarboidrato(), valoresRefeicao.getProteina(),
                 valoresRefeicao.getGordura(), valoresRefeicao.getCalorias(), valoresRefeicao.getPeso(), alimentosDaRefeicao); //Crio a refeição com base nas infos        
         adicionaRefeicaoService.adicionar(refeicao); //Adiciona Refeição e Alimentos da mesma no banco                        //e passo para o BD salvar!
 
