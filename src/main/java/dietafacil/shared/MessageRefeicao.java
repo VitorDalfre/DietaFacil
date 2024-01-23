@@ -13,4 +13,5 @@ public class MessageRefeicao {
         
         JOptionPane.showMessageDialog(null, MESSAGE, title, JOptionPane.WARNING_MESSAGE);
     }
+    
 }

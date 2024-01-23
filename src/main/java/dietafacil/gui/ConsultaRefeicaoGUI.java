@@ -1,8 +1,10 @@
 package dietafacil.gui;
+
 import dietafacil.modelo.Refeicao;
 import dietafacil.service.ConsultaRefeicaoService;
 import dietafacil.shared.ConverteData;
 import dietafacil.shared.MessageData;
+import dietafacil.shared.MessageRegistro;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -11,11 +13,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 public class ConsultaRefeicaoGUI extends javax.swing.JInternalFrame {
-
+    
     MaskFormatter mf;
-    private AdicionaRefeicaoGUI cadastroRefeicaoGUI;
+    private AdicionaRefeicaoGUI adicionaRefeicaoGUI;
     private ConsultaRefeicaoService consultaRefeicaoService;
-
+    private RefeicaoGUI refeicaoGUI;
+    
     public ConsultaRefeicaoGUI() {
         consultaRefeicaoService = new ConsultaRefeicaoService();
         try {
@@ -28,9 +31,9 @@ public class ConsultaRefeicaoGUI extends javax.swing.JInternalFrame {
         SwingUtilities.invokeLater(() -> {
             moveToFront();
         });
-
+        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -73,18 +76,27 @@ public class ConsultaRefeicaoGUI extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Refeição", "Data", "Calorias (Kcal)", "Peso (g)"
+                "ID", "Refeição", "Data", "Calorias (Kcal)", "Peso (g)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tabelaRefeicao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaRefeicaoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaRefeicao);
+        if (tabelaRefeicao.getColumnModel().getColumnCount() > 0) {
+            tabelaRefeicao.getColumnModel().getColumn(0).setMinWidth(50);
+            tabelaRefeicao.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,16 +105,16 @@ public class ConsultaRefeicaoGUI extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jfData, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btConsultar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 438, Short.MAX_VALUE)
-                        .addComponent(btAdicionar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbData)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jfData, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                                .addComponent(btConsultar))
+                            .addComponent(lbData))
+                        .addGap(290, 290, 290)
+                        .addComponent(btAdicionar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -112,13 +124,13 @@ public class ConsultaRefeicaoGUI extends javax.swing.JInternalFrame {
                 .addComponent(lbData)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jfData, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jfData, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btConsultar)
                         .addComponent(btAdicionar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                .addGap(8, 8, 8))
         );
 
         pack();
@@ -126,19 +138,25 @@ public class ConsultaRefeicaoGUI extends javax.swing.JInternalFrame {
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
         String data = null;
-        try{
-        data = ConverteData.converte(jfData.getText());
-        } catch(ParseException e){
+        try {
+            data = ConverteData.converte(jfData.getText());
+        } catch (ParseException e) {
             jfData.setText("");
             MessageData.invalida(title);
+            return;
         }
         
-        ArrayList<Refeicao> listaRefeicao = consultaRefeicaoService.consultar(data);
+        ArrayList<Refeicao> listaRefeicao = consultaRefeicaoService.consultarPorData(data);
         DefaultTableModel modeloTabela = (DefaultTableModel) tabelaRefeicao.getModel();
+        modeloTabela.setNumRows(0);
         
-        for(Refeicao ref : listaRefeicao){
-            Object[] dadosTabela = {"Teste DescricaoREF", ref.getData(), ref.getCalorias(), ref.getPeso()};
-            modeloTabela.addRow(dadosTabela);
+        if (!listaRefeicao.isEmpty()) {
+            for (Refeicao ref : listaRefeicao) {
+                Object[] dadosTabela = {ref.getId(), ref.getOpcaoRefeicao(), ref.getData(), ref.getCalorias(), ref.getPeso()};
+                modeloTabela.addRow(dadosTabela);
+            }
+        } else {
+            MessageRegistro.naoEncontrado(title);
         }
     }//GEN-LAST:event_btConsultarActionPerformed
 
@@ -147,12 +165,19 @@ public class ConsultaRefeicaoGUI extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jfDataActionPerformed
 
     private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
-        if (Objects.isNull(cadastroRefeicaoGUI)) {
-            cadastroRefeicaoGUI = new AdicionaRefeicaoGUI();
+        if (Objects.isNull(adicionaRefeicaoGUI)) {
+            adicionaRefeicaoGUI = new AdicionaRefeicaoGUI();
         }
-        cadastroRefeicaoGUI.setVisible(Boolean.TRUE);
-        DesktopManager.adicionar(cadastroRefeicaoGUI);
+        DesktopManager.adicionar(adicionaRefeicaoGUI);
+        adicionaRefeicaoGUI.setVisible(Boolean.TRUE);
     }//GEN-LAST:event_btAdicionarActionPerformed
+
+    private void tabelaRefeicaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaRefeicaoMouseClicked
+        Object id = tabelaRefeicao.getValueAt(tabelaRefeicao.getSelectedRow(), 0);
+        int idRef = (int) id;
+        refeicaoGUI = new RefeicaoGUI(idRef);
+        DesktopManager.adicionar(refeicaoGUI);
+    }//GEN-LAST:event_tabelaRefeicaoMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

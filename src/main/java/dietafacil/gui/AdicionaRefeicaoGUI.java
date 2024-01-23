@@ -2,6 +2,7 @@ package dietafacil.gui;
 
 import dietafacil.modelo.Alimento;
 import dietafacil.modelo.Refeicao;
+import dietafacil.modelo.enums.OpcaoRefeicao;
 import dietafacil.service.AdicionaAlimentoRefeicaoService;
 import dietafacil.service.AdicionaRefeicaoService;
 import dietafacil.service.CalcularMacrosRefeicaoService;
@@ -13,8 +14,7 @@ import dietafacil.shared.MessageRefeicao;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
@@ -45,6 +45,7 @@ public class AdicionaRefeicaoGUI extends javax.swing.JInternalFrame {
         calcularRefeicaoCompletaService = new CalcularRefeicaoCompletaService();
         adicionaRefeicaoService = new AdicionaRefeicaoService();
         adicionaAlimentoRefeicaoService = new AdicionaAlimentoRefeicaoService();
+        cbRefeicao.setModel(new DefaultComboBoxModel(OpcaoRefeicao.getDescricoes()));
     }
 
     @SuppressWarnings("unchecked")
@@ -63,6 +64,8 @@ public class AdicionaRefeicaoGUI extends javax.swing.JInternalFrame {
         btSalvar = new javax.swing.JButton();
         jfData = new javax.swing.JFormattedTextField(mf);
         lbData = new javax.swing.JLabel();
+        cbRefeicao = new javax.swing.JComboBox<>();
+        lbRefeicao = new javax.swing.JLabel();
 
         setClosable(true);
         setMaximizable(true);
@@ -113,58 +116,71 @@ public class AdicionaRefeicaoGUI extends javax.swing.JInternalFrame {
 
         lbData.setText("Data");
 
+        cbRefeicao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbRefeicao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbRefeicaoActionPerformed(evt);
+            }
+        });
+
+        lbRefeicao.setText("Refeicao");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btSalvar))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(25, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jfData, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbData))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbAlimento))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbPeso)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(61, 61, 61)
-                                .addComponent(btAdicionar))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(25, 25, 25))
+                            .addComponent(jfData, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbData))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbRefeicao)
+                            .addComponent(cbRefeicao, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbAlimento))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbPeso)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btAdicionar)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btAdicionar)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lbAlimento)
-                                    .addComponent(lbPeso))
-                                .addGap(29, 29, 29))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbData)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jfData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(2, 2, 2)))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btAdicionar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbData)
+                            .addComponent(lbRefeicao))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jfData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbRefeicao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(2, 2, 2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbAlimento)
+                            .addComponent(lbPeso))
+                        .addGap(29, 29, 29))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btSalvar)
                 .addGap(11, 11, 11))
@@ -216,13 +232,15 @@ public class AdicionaRefeicaoGUI extends javax.swing.JInternalFrame {
         }
         DesktopManager.adicionar(refeicaoGUI);
         refeicaoGUI.setVisible(Boolean.TRUE);
+        
+        String tipoRefeicao = cbRefeicao.getItemAt(cbRefeicao.getSelectedIndex());
 
         Alimento valoresRefeicao = calcularRefeicaoCompletaService.calcularRefeicao(alimentosCalculados); //Retorna o total da Refeição (Carb, Prot, Gord e KCal)
-        refeicaoGUI.mostraValoresTotais(valoresRefeicao, alimentosCalculados, data); //Mostra Lista de Alimentos, totais e data da refeição na tela
+        refeicaoGUI.mostraValoresTotais(valoresRefeicao, alimentosCalculados, tipoRefeicao, data); //Mostra Lista de Alimentos, totais e data da refeição na tela
 
-        Refeicao refeicao = new Refeicao(data, valoresRefeicao.getCarboidrato(), valoresRefeicao.getProteina(),
+        Refeicao refeicao = new Refeicao(data, tipoRefeicao, valoresRefeicao.getCarboidrato(), valoresRefeicao.getProteina(),
                 valoresRefeicao.getGordura(), valoresRefeicao.getCalorias(), valoresRefeicao.getPeso(), alimentosDaRefeicao); //Crio a refeição com base nas infos        
-        adicionaRefeicaoService.adicionar(refeicao); //Adiciona Refeição e Alimentos da mesma no banco                        //e passo para o BD salvar!
+        adicionaRefeicaoService.adicionar(refeicao); //Adiciona tipoRefeicaoRefeição e Alimentos da mesma no banco                        //e passo para o BD salvar!
 
         limparTabela();
         alimentosCalculados.clear();
@@ -236,6 +254,9 @@ public class AdicionaRefeicaoGUI extends javax.swing.JInternalFrame {
     private void jfDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfDataActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jfDataActionPerformed
+
+    private void cbRefeicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbRefeicaoActionPerformed
+    }//GEN-LAST:event_cbRefeicaoActionPerformed
 
     private void adicionaAlimentoTabela(Alimento alimento, double pPeso) {
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
@@ -253,6 +274,7 @@ public class AdicionaRefeicaoGUI extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdicionar;
     private javax.swing.JButton btSalvar;
+    private javax.swing.JComboBox<String> cbRefeicao;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -260,6 +282,7 @@ public class AdicionaRefeicaoGUI extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lbAlimento;
     private javax.swing.JLabel lbData;
     private javax.swing.JLabel lbPeso;
+    private javax.swing.JLabel lbRefeicao;
     private javax.swing.JTable tabela;
     private javax.swing.JTextPane txtAlimento;
     private javax.swing.JTextPane txtPeso;

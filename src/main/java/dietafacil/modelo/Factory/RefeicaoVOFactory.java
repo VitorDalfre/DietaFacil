@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class RefeicaoVOFactory {
 
     public static RefeicaoVO create(Refeicao pRefeicao) {
-        return new RefeicaoVO(pRefeicao.getData(), pRefeicao.getCarboidrato(), pRefeicao.getProteina(),
+        return new RefeicaoVO(pRefeicao.getId(), pRefeicao.getData(), pRefeicao.getOpcaoRefeicao() ,pRefeicao.getCarboidrato(), pRefeicao.getProteina(),
                 pRefeicao.getGordura(), pRefeicao.getCalorias(), pRefeicao.getPeso(), listaParaListaVO(pRefeicao.getListaAlimento()));
     }
 

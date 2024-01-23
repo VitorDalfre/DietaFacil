@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class RefeicaoFactory {
 
     public static Refeicao create(RefeicaoVO pRefeicaoVO) {
-        return new Refeicao(pRefeicaoVO.getData(), pRefeicaoVO.getCarboidrato(), pRefeicaoVO.getProteina(),
+        return new Refeicao(pRefeicaoVO.getId(), pRefeicaoVO.getData(),pRefeicaoVO.getOpcaoRefeicao() ,pRefeicaoVO.getCarboidrato(), pRefeicaoVO.getProteina(),
                 pRefeicaoVO.getGordura(), pRefeicaoVO.getCalorias(), pRefeicaoVO.getPeso(), listaVOparaLista(pRefeicaoVO.getListaAlimento()));
     }
     
@@ -31,7 +31,7 @@ public class RefeicaoFactory {
     }
     
     private static Refeicao createSemAlimento(RefeicaoVO pRefeicaoVO) {
-        return new Refeicao(pRefeicaoVO.getData(), pRefeicaoVO.getCarboidrato(), pRefeicaoVO.getProteina(),
+        return new Refeicao(pRefeicaoVO.getId(), pRefeicaoVO.getData(), pRefeicaoVO.getOpcaoRefeicao(), pRefeicaoVO.getCarboidrato(), pRefeicaoVO.getProteina(),
                 pRefeicaoVO.getGordura(), pRefeicaoVO.getCalorias(), pRefeicaoVO.getPeso());
     }
 

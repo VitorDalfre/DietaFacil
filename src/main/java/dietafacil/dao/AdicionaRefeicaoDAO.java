@@ -17,8 +17,9 @@ public class AdicionaRefeicaoDAO {
         ResultSet rst;
         StringBuilder sql = new StringBuilder();
 
-        sql.append("INSERT INTO refeicao (data, carboidrato, proteina, gordura, calorias, peso) VALUES ('")
-                .append(formatarData(pRefeicao.getData())).append("', ")
+        sql.append("INSERT INTO refeicao (data, refeicao,carboidrato, proteina, gordura, calorias, peso) VALUES ('")
+                .append(formatarData(pRefeicao.getData())).append("', '")
+                .append(pRefeicao.getOpcaoRefeicao()).append("', ")
                 .append(pRefeicao.getCarboidrato()).append(", ")
                 .append(pRefeicao.getProteina()).append(", ")
                 .append(pRefeicao.getGordura()).append(", ")

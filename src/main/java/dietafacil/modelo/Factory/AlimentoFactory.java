@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class AlimentoFactory {
     
     public static Alimento create(AlimentoVO pAlimento) {
-        return new Alimento(pAlimento.getDescricao(), pAlimento.getCarboidrato(), pAlimento.getProteina(), pAlimento.getGordura(), pAlimento.getCalorias());
+        return new Alimento(pAlimento.getDescricao(), pAlimento.getCarboidrato(), pAlimento.getProteina(), pAlimento.getGordura(), pAlimento.getCalorias(), pAlimento.getPeso());
     }
     
     public static ArrayList<Alimento> createLista(ArrayList<AlimentoVO> pListaVO){

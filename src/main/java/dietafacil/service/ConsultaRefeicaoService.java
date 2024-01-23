@@ -13,9 +13,14 @@ public class ConsultaRefeicaoService {
            consultaRefeicaoDAO = new ConsultaRefeicaoDAO();
     }
     
-    public ArrayList<Refeicao> consultar(String data){
-        ArrayList<Refeicao> listaAlimentos = RefeicaoFactory.listaRefeicao(consultaRefeicaoDAO.consultar(data));
+    public ArrayList<Refeicao> consultarPorData(String data){
+        ArrayList<Refeicao> listaAlimentos = RefeicaoFactory.listaRefeicao(consultaRefeicaoDAO.consultarPorData(data));
         return listaAlimentos;
+    }
+    
+    public Refeicao consultarRefeicao(int pId){
+        Refeicao ref = RefeicaoFactory.create(consultaRefeicaoDAO.consultarRefeicao(pId));
+        return ref;
     }
 
 }

@@ -17,6 +17,7 @@ public class CriarTabelasRefeicaoDAO {
             sql.append("CREATE TABLE refeicao (")
                     .append("id SERIAL PRIMARY KEY, ")
                     .append("data DATE NOT NULL, ")
+                    .append("refeicao VARCHAR(30) NOT NULL, ")
                     .append("carboidrato NUMERIC(11,2) NOT NULL, ")
                     .append("proteina NUMERIC(11,2) NOT NULL, ")
                     .append("gordura NUMERIC(11,2) NOT NULL, ")
